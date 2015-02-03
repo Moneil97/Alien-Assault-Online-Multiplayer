@@ -1,27 +1,37 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class Screen extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
-	private Player player;
+	private Player you;
 	private HashMap<String,Player> others;
 	private StringBuilder username;
 	private MainThingy4 parent;
+	private BufferedImage image;
+	
 	
 	public Screen(MainThingy4 parent) {
 		this.parent = parent;
-		this.player = parent.you;
+		this.you = parent.you;
 		this.others = parent.others;
 		this.username = parent.username;
-		//this.setBackground(Color.green);
+		
+		try {
+			image = ImageIO.read(new File("Images/You/Player.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -39,13 +49,14 @@ public class Screen extends JPanel {
 		
 		//Draw other players
 		g.setColor(Color.green);
-		for (Entry<String, Player> entry : others.entrySet())
-			g.fill(entry.getValue().getRect());
+		for (Entry<String, Player> entry : others.entrySet()){
+			Player other = entry.getValue();
+			other.draw(g, image);
+		}
 		
 		//Draw you
 		g.setColor(Color.blue);
-		player.draw(g);
-		
+		you.draw(g, image);
 		
 		g.setColor(Color.magenta);
 		
@@ -55,10 +66,6 @@ public class Screen extends JPanel {
 		
 		for (String s : others.keySet()){
 			g.drawString(s, 300, y+=20);
-		}
-		
-		for (Projectile p : player.getProjectiles()){
-			p.draw(g);
 		}
 		
 		g.drawString(parent.uaf.getUPS() + "", 20, 20);

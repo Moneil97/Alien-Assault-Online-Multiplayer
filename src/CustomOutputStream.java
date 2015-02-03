@@ -27,7 +27,6 @@ public class CustomOutputStream {
 	public void sendObject(Object o){
 		try {
 			oos.writeObject(o);
-//			say("Size: " + bos.size() + " bytes");
 			bos.writeTo(baseStream);
 			bos.reset();
 		} catch (IOException e) {
@@ -45,13 +44,7 @@ public class CustomOutputStream {
 		}
 	}
 	
-	private void say(Object o) {
+	public void say(Object o) {
 		System.out.println(o);
 	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

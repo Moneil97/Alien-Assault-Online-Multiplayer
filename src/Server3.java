@@ -322,4 +322,8 @@ class ServerConnection {
 	public String getName(){
 		return name;
 	}
+	
+	public String toString(){
+		return "Connection: " + name + " [" + sock + "]";
+	}
 }

@@ -17,7 +17,6 @@ public class Player implements Serializable{
 	private Rectangle rect;
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private boolean leftHeld, rightHeld, upHeld, downHeld, fireHeld;
-	private BufferedImage image;
 
 //	public PlayerData(int x, int y, int width, int height) {
 //		this(new Rectangle(x,y,width,height));
@@ -25,12 +24,6 @@ public class Player implements Serializable{
 	
 	public Player(Rectangle rect) {
 		this.rect = rect;
-		
-		try {
-			image = ImageIO.read(new File("Images/You/Player.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void fire(Point p){
@@ -94,8 +87,13 @@ public class Player implements Serializable{
 	}
 
 	public void updateProjectiles() {
-		for (Projectile p : projectiles)
-			p.coords.setLocation(p.coords.x + p.xSpeed, p.coords.y + p.ySpeed);
+		for (int i=0; i< projectiles.size(); i++){
+			projectiles.get(i).update();
+		}
+	}
+
+	public void say( Object o) {
+		System.out.println(o);
 	}
 
 	public boolean isFireHeld() {
@@ -106,10 +104,29 @@ public class Player implements Serializable{
 		this.fireHeld = fireHeld;
 	}
 
-	public void draw(Graphics2D g) {
-//		g.drawImage(image, rect.x, rect.y, null);
-//		g.draw(rect);
+	public void draw(Graphics2D g, BufferedImage image) {
+		g.drawImage(image, rect.x, rect.y, null);
+		
+		for (Projectile p : new ArrayList<Projectile>(projectiles)){
+			p.draw(g);
+		}
+	}
+
+	public void addProjectile(Projectile p) {
+		projectiles.add(p);
+	}
+
+	public void setProjectiles(List<Projectile> list) {
+		projectiles = list;
+	}
+
+	private void setKeysHeld(boolean leftHeld2, boolean rightHeld2,
+			boolean upHeld2, boolean downHeld2, boolean fireHeld2) {
+		leftHeld = leftHeld2;
+		rightHeld = rightHeld2;
+		upHeld = upHeld2;
+		downHeld = downHeld2;
+		fireHeld = fireHeld2;
 	}
 }
 
-//class 

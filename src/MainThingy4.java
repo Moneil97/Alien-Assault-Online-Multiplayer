@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -103,8 +104,10 @@ public class MainThingy4 extends JFrame{
 		if (you.isDownHeld()){
 			you.setCoords(you.getCoords().x, you.getCoords().y + 5);
 		}
-		if (you.isFireHeld())
+		if (you.isFireHeld()){
 			you.fire(you.getCoords());
+			client.sendPacketToServer(new MyPacket(ServerEnums.newProjectile, you.getProjectiles().get(you.getProjectiles().size()-1)));
+		}
 		
 		for (Entry<String, Player> other : others.entrySet()){
 			Player player = other.getValue();
@@ -120,10 +123,11 @@ public class MainThingy4 extends JFrame{
 			if (player.isDownHeld()){
 				player.setCoords(player.getCoords().x, player.getCoords().y + 5);
 			}
+			
+			player.updateProjectiles();
 		}
 		
 		you.updateProjectiles();
-		
 		
 		if (debug) System.out.println(you);
 	}
@@ -177,9 +181,13 @@ public class MainThingy4 extends JFrame{
 				}
 				else if (purpose == ServerEnums.joinInfo){
 					say("Welcome");
+					say(((Player) packet.getObjects()[1]).getProjectiles());
 					others.put((String) packet.getObjects()[0], (Player) packet.getObjects()[1]);
 				}
 				else if (purpose == ServerEnums.requestUpdate){
+					say("Update requested, sending: " + you.getProjectiles());
+					//say("Clone: " + (you.clone()).getProjectiles());
+					//you.setProjectiles(new ArrayList<Projectile>(you.getProjectiles()));
 					client.sendPacketToServer(new MyPacket(ServerEnums.returnUpdate, you));
 				}
 				else if (purpose == ServerEnums.requestUsername){
@@ -189,9 +197,15 @@ public class MainThingy4 extends JFrame{
 					username.replace(0, username.length(), JOptionPane.showInputDialog("Username: " + username.toString() + " is taken\nPlease try a new one:"));
 					client.sendPacketToServer(new MyPacket(ServerEnums.returnUsername, username.toString()));
 				}
+				else if (purpose == ServerEnums.newProjectile){
+					//say("new proj");
+					others.get(packet.getObjects()[0]).addProjectile((Projectile) packet.getObjects()[1]);
+				}
 			}
 		};
 	}
+	
+//	List<Projectile> otherPros = new ArrayList<Projectile>();
 
 	private void setupKeys() {
 		
