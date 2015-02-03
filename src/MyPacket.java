@@ -1,7 +1,5 @@
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Arrays;
-
 
 @SuppressWarnings("serial")
 public class MyPacket implements Serializable{

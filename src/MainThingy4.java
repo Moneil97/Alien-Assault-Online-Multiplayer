@@ -15,7 +15,7 @@ public class MainThingy4 extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 	public static final int gameHeight = 400, gameWidth = 400;
-	private int port = 25568;
+	private int port = 25565;
 	HashMap<String, Player> others = new HashMap<String, Player>();
 	private Rectangle defaultRect = new Rectangle(50,50,50,50);
 	public Player you = new Player((Rectangle) defaultRect.clone());
@@ -23,7 +23,6 @@ public class MainThingy4 extends JFrame{
 	static boolean debug = false;
 	public StringBuilder username = new StringBuilder("default");
 	private String ip = "0";
-	//public Border border = new Border(0,400,0,400);
 	
 	public MainThingy4() {
 		//attempt to set up server
