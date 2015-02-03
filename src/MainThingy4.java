@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -185,10 +184,8 @@ public class MainThingy4 extends JFrame{
 					others.put((String) packet.getObjects()[0], (Player) packet.getObjects()[1]);
 				}
 				else if (purpose == ServerEnums.requestUpdate){
-					say("Update requested, sending: " + you.getProjectiles());
-					//say("Clone: " + (you.clone()).getProjectiles());
-					//you.setProjectiles(new ArrayList<Projectile>(you.getProjectiles()));
-					client.sendPacketToServer(new MyPacket(ServerEnums.returnUpdate, you));
+//					say("Update requested, sending: " + you.getProjectiles());
+					client.sendPacketToServer(new MyPacket(ServerEnums.returnUpdate, you.clearProjectiles()));
 				}
 				else if (purpose == ServerEnums.requestUsername){
 					client.sendPacketToServer(new MyPacket(ServerEnums.returnUsername, username.toString()));

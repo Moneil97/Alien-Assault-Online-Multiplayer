@@ -116,17 +116,22 @@ public class Player implements Serializable{
 		projectiles.add(p);
 	}
 
-	public void setProjectiles(List<Projectile> list) {
-		projectiles = list;
-	}
+//	public void setProjectiles(List<Projectile> list) {
+//		projectiles = list;
+//	}
+//
+//	private void setKeysHeld(boolean leftHeld2, boolean rightHeld2,
+//			boolean upHeld2, boolean downHeld2, boolean fireHeld2) {
+//		leftHeld = leftHeld2;
+//		rightHeld = rightHeld2;
+//		upHeld = upHeld2;
+//		downHeld = downHeld2;
+//		fireHeld = fireHeld2;
+//	}
 
-	private void setKeysHeld(boolean leftHeld2, boolean rightHeld2,
-			boolean upHeld2, boolean downHeld2, boolean fireHeld2) {
-		leftHeld = leftHeld2;
-		rightHeld = rightHeld2;
-		upHeld = upHeld2;
-		downHeld = downHeld2;
-		fireHeld = fireHeld2;
+	public Player clearProjectiles() {
+		projectiles.clear();
+		return this;
 	}
 }
 

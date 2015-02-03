@@ -20,7 +20,6 @@ public class Screen extends JPanel {
 	private MainThingy4 parent;
 	private BufferedImage image;
 	
-	
 	public Screen(MainThingy4 parent) {
 		this.parent = parent;
 		this.you = parent.you;
@@ -28,7 +27,7 @@ public class Screen extends JPanel {
 		this.username = parent.username;
 		
 		try {
-			image = ImageIO.read(new File("Images/You/Player.png"));
+			image = ImageIO.read(new File("src/images/Player.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
