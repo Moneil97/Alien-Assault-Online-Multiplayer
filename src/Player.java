@@ -2,13 +2,9 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 
 @SuppressWarnings("serial")
@@ -89,6 +85,11 @@ public class Player implements Serializable{
 	public void updateProjectiles() {
 		for (int i=0; i< projectiles.size(); i++){
 			projectiles.get(i).update();
+			if (projectiles.get(i).isDead()){
+				say("killed projectile");
+				projectiles.remove(i);
+				i--;
+			}
 		}
 	}
 
