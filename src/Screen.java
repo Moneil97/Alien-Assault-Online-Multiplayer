@@ -18,7 +18,7 @@ public class Screen extends JPanel {
 	private HashMap<String,Player> others;
 	private StringBuilder username;
 	private MainThingy4 parent;
-	private BufferedImage image;
+	private BufferedImage ship, laser;
 	
 	public Screen(MainThingy4 parent) {
 		this.parent = parent;
@@ -27,7 +27,8 @@ public class Screen extends JPanel {
 		this.username = parent.username;
 		
 		try {
-			image = ImageIO.read(new File("src/images/Player.png"));
+			ship = ImageIO.read(new File("src/images/Player.png"));
+			laser = ImageIO.read(new File("src/images/Laser.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -50,12 +51,12 @@ public class Screen extends JPanel {
 		g.setColor(Color.green);
 		for (Entry<String, Player> entry : others.entrySet()){
 			Player other = entry.getValue();
-			other.draw(g, image);
+			other.draw(g, ship, laser);
 		}
 		
 		//Draw you
 		g.setColor(Color.blue);
-		you.draw(g, image);
+		you.draw(g, ship, laser);
 		
 		g.setColor(Color.magenta);
 		

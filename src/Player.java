@@ -22,8 +22,8 @@ public class Player implements Serializable{
 		this.rect = rect;
 	}
 	
-	public void fire(Point p){
-		projectiles.add(new Projectile(p));
+	public void fire(){
+		projectiles.add(new Projectile(new Point(rect.x + rect.width/2 - Projectile.width/2, rect.y)));
 	}
 
 	public Point getCoords(){
@@ -86,7 +86,6 @@ public class Player implements Serializable{
 		for (int i=0; i< projectiles.size(); i++){
 			projectiles.get(i).update();
 			if (projectiles.get(i).isDead()){
-				say("killed projectile");
 				projectiles.remove(i);
 				i--;
 			}
@@ -105,11 +104,11 @@ public class Player implements Serializable{
 		this.fireHeld = fireHeld;
 	}
 
-	public void draw(Graphics2D g, BufferedImage image) {
-		g.drawImage(image, rect.x, rect.y, null);
+	public void draw(Graphics2D g, BufferedImage ship, BufferedImage laser) {
+		g.drawImage(ship, rect.x, rect.y, null);
 		
 		for (Projectile p : new ArrayList<Projectile>(projectiles)){
-			p.draw(g);
+			p.draw(g, laser);
 		}
 	}
 

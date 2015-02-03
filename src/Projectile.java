@@ -1,5 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
@@ -8,7 +9,8 @@ public class Projectile implements Serializable{
 	private Point coords;
 	public final int xSpeed = 0, ySpeed = -5;
 	private boolean dead = false;
-	private final int height = 10, width = 10;
+	private final int height = 10;
+	final static int width = 10;
 	
 	public Projectile(Point p) {
 		coords = p;
@@ -18,8 +20,9 @@ public class Projectile implements Serializable{
 		return coords;
 	}
 
-	public void draw(Graphics2D g) {
-		g.drawRect(coords.x, coords.y, 10, 10);
+	public void draw(Graphics2D g, BufferedImage laser) {
+		//g.drawRect(coords.x, coords.y, 10, 10);
+		g.drawImage(laser, coords.x, coords.y, width, height, null);
 	}
 
 	public void update() {

@@ -17,7 +17,7 @@ public class MainThingy4 extends JFrame{
 	public static final int gameHeight = 400, gameWidth = 400;
 	private int port = 25565;
 	HashMap<String, Player> others = new HashMap<String, Player>();
-	private Rectangle defaultRect = new Rectangle(50,50,50,50);
+	private Rectangle defaultRect = new Rectangle(50,50,42,44);
 	public Player you = new Player((Rectangle) defaultRect.clone());
 	private Client client;
 	static boolean debug = false;
@@ -105,7 +105,7 @@ public class MainThingy4 extends JFrame{
 			you.setCoords(you.getCoords().x, you.getCoords().y + 5);
 		}
 		if (you.isFireHeld()){
-			you.fire(you.getCoords());
+			you.fire();
 			client.sendPacketToServer(new MyPacket(ServerEnums.newProjectile, you.getProjectiles().get(you.getProjectiles().size()-1)));
 		}
 		
@@ -144,22 +144,26 @@ public class MainThingy4 extends JFrame{
 				ServerEnums purpose = packet.getPurpose();
 				
 				if (purpose == ServerEnums.direction){
-					String sender = (String) packet.getObjects()[0];
-					ServerEnums direction = (ServerEnums) packet.getObjects()[1];
-					boolean held = (boolean) packet.getObjects()[2];
-					
-					if (direction == ServerEnums.left){
-						others.get(sender).setLeftHeld(held);
-					}
-					else if (direction == ServerEnums.right){
-						others.get(sender).setRightHeld(held);
-					}
-					else if (direction == ServerEnums.up){
-						others.get(sender).setUpHeld(held);
-					}
-					else if (direction == ServerEnums.down){
-						others.get(sender).setDownHeld(held);
-					}
+					try{
+						String sender = (String) packet.getObjects()[0];
+						ServerEnums direction = (ServerEnums) packet.getObjects()[1];
+						boolean held = (boolean) packet.getObjects()[2];
+						
+						if (direction == ServerEnums.left){
+							others.get(sender).setLeftHeld(held);
+						}
+						else if (direction == ServerEnums.right){
+							others.get(sender).setRightHeld(held);
+						}
+						else if (direction == ServerEnums.up){
+							others.get(sender).setUpHeld(held);
+						}
+						else if (direction == ServerEnums.down){
+							others.get(sender).setDownHeld(held);
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+					};
 				}
 				else if (purpose == ServerEnums.fixLocation){
 					others.get(packet.getObjects()[0]).setCoords((Point) packet.getObjects()[1]);
