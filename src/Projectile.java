@@ -7,10 +7,9 @@ import java.io.Serializable;
 public class Projectile implements Serializable{
 
 	private Point coords;
-	public final int xSpeed = 0, ySpeed = -5;
+	public final int xSpeed = 0, ySpeed = -10;
 	private boolean dead = false;
-	private final int height = 10;
-	final static int width = 10;
+	final static int width = 10, height = 10;
 	
 	public Projectile(Point p) {
 		coords = p;
